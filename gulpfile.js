@@ -74,7 +74,7 @@ gulp.task('clean', function(){
 
 gulp.task('scripts', function(){
     return gulp.src(src.js, {base: src.base })
-        //.pipe(changed(output ))
+         .pipe( gulpif(!isRelease, changed(output) ) )
         //.pipe(sourcemaps.init())
         .pipe( gulpif(isRelease, uglify()) )
         .on('error', errorHandler)
@@ -88,8 +88,10 @@ gulp.task('scripts', function(){
 gulp.task('less', function(){
 
     return gulp.src(src.css, {base: src.base })
-        //.pipe(changed(output, {extension: '.css'}))
+        .pipe( gulpif(!isRelease, changed(output, {extension: '.css'}) ) )
+         .pipe(sourcemaps.init())
         .pipe(less()).on('error', errorHandler)
+        .pipe(sourcemaps.write())
         .pipe(plumber())
         .pipe( gulpif(isRelease, cleanCss({compatibility: 'ie7'})) )
         .pipe( gulpif(isRelease, rev() ) )
@@ -102,7 +104,7 @@ gulp.task('less', function(){
 gulp.task('images', function(){
 
     return gulp.src(src.img, {base: src.base })
-        .pipe(changed(output ))
+        .pipe(gulpif(!isRelease, changed(output)) )
         .pipe(rev())
         .pipe(gulp.dest(output ))
         .pipe(rev.manifest())
