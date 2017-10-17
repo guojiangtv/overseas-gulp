@@ -7,8 +7,8 @@ plumber      = require('gulp-plumber'), // less报错时不退出watch
 clean        = require('gulp-clean'),
 fs           = require('fs'), //获取真实路径
 runSequence  = require('run-sequence'),
-rev          = require('gulp-rev'),
-revCollector = require('gulp-rev-collector'),
+rev          = require('gulp-rev-params'),
+revCollector = require('gulp-rev-collector-params'),
 gulpif       = require('gulp-if'),
 changed      = require('gulp-changed'),
 debug        = require('gulp-debug'),
@@ -171,28 +171,6 @@ function errorHandler(error) {
     console.log(error.toString());
     this.emit('end');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
