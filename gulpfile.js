@@ -75,11 +75,11 @@ gulp.task('scripts', function() {
 gulp.task('less', function() {
     return gulp.src(m_src.css, { base: m_src.base })
         .pipe(gulpif(!isRelease, changed(m_output, {extension: '.css'})))
-        .pipe( sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(less()).on('error', errorHandler)
         .pipe(sourcemaps.write())
         .pipe(plumber())
-        .pipe(gulpif(isRelease, postcss([autoprefixer()])))
+        .pipe(gulpif(!isRelease, postcss([autoprefixer()])))
         .pipe(gulpif(isRelease, cleanCss()))
         .pipe(gulpif(isRelease, rev()))
         .pipe(debug({ title: 'css:' }))
@@ -140,6 +140,7 @@ gulp.task('dev', function() {
     );
 });
 
+//默认执行gulp dev命令
 gulp.task('default', ['dev'])
 
 
