@@ -95,7 +95,7 @@ gulp.task('images', function() {
         // .pipe(tiny())
         .pipe(gulp.dest(m_output))
         .pipe(gulpif(isRelease, rev.manifest()))
-        .pipe(gulp.dest('./rev/mobile/img/'));
+        .pipe(gulpif(isRelease,gulp.dest('./rev/mobile/img/')));
 });
 
 gulp.task('rev', function() {
