@@ -79,7 +79,7 @@ gulp.task('less', function() {
         .pipe(less()).on('error', errorHandler)
         .pipe(sourcemaps.write())
         .pipe(plumber())
-        .pipe(gulpif(!isRelease, postcss([autoprefixer()])))
+        .pipe(postcss([autoprefixer()]))
         .pipe(gulpif(isRelease, cleanCss()))
         .pipe(gulpif(isRelease, rev()))
         .pipe(debug({ title: 'css:' }))
