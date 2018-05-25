@@ -150,7 +150,7 @@ function normal(){
     /***************** 移动待发布文件到trunk ***********************/
 
     var file = './cblivefile.txt';
-    gulp.task('move', function() {
+    gulp.task('copytrunk', function() {
         fs.readFile(file, function(err, obj) {
             console.log('err:', err);
             var obj = obj.toString().replace(/\s{2,}/g, '\n').replace(/(^\s+)|(\s+$)/g, '').split('\n');
@@ -166,6 +166,25 @@ function normal(){
             }
         })
     });
+
+    gulp.task('copybeta', function() {
+        fs.readFile(file, function(err, obj) {
+            console.log('err:', err);
+            var obj = obj.toString().replace(/\s{2,}/g, '\n').replace(/(^\s+)|(\s+$)/g, '').split('\n');
+            for (var i = 0; i < obj.length; i++) {
+                var srcFile = '/var/www/' + obj[i].replace(/\s+/g, '');
+                if (srcFile.indexOf('.') == -1) {
+                    srcFile = srcFile + '/**/*.*';
+                }
+                console.log('dir:', srcFile);
+                gulp.src(srcFile, { base: '../../' })
+                    .pipe(debug('file:', srcFile))
+                    .pipe(gulp.dest(fs.realpathSync('../../beta')));
+            }
+        })
+    });
+
+
 
     /*错误处理*/
     function errorHandler(error) {
